@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const fruits = ['Banana', 'Apple', 'Orange', 'Mango', 'Pineapple', 'Watermelon'];
+  
+  const displayFrutas = (arr) => { 
+    return arr.map((fruta) => {return <div key={ fruta }>{ fruta }</div>});
+  }
+  
+  const [display, setDisplay] = useState(displayFrutas(fruits));
+
+
+
+  function handleChange(event) {
+    const filtered = fruits.filter((fruta) => {
+      return fruta.toLocaleLowerCase().includes(event.target.value.toLowerCase())
+    });
+    setDisplay(displayFrutas(filtered));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input name='input' onChange={handleChange} />
+      <div>
+        {display}
+      </div>
     </div>
   );
 }
